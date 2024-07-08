@@ -23,9 +23,11 @@ import (
 )
 
 const (
-	MACAddressSubType = 11
-	IPv4DeviceSubType = 12
-	SATADeviceSubType = 18
+	URIDeviceSubType    = 10
+	MACAddressSubType   = 11
+	IPv4DeviceSubType   = 12
+	SATADeviceSubType   = 18
+	VENDORDeviceSubType = 24
 )
 
 func ParseMessagingDevicePath(r io.Reader, h Head) (p DevicePath, err error) {
@@ -36,6 +38,8 @@ func ParseMessagingDevicePath(r io.Reader, h Head) (p DevicePath, err error) {
 		p = &IPv4DevicePath{Head: h}
 	case SATADeviceSubType:
 		p = &SATADevicePath{Head: h}
+	case URIDeviceSubType:
+		p = &URIDevicePath{Head: h}
 	default:
 		p = &UnrecognizedDevicePath{Head: h}
 	}
@@ -118,6 +122,29 @@ func (p *IPv4DevicePath) ReadFrom(r io.Reader) (n int64, err error) {
 	p.GatewayAddr = make(net.IP, 4)
 
 	if err = fr.ReadFields(&p.LocalIP, &p.RemoteIP, &p.LocalPort, &p.RemotePort); err != nil {
+		return
+	}
+	return
+}
+
+type URIDevicePath struct {
+	Head
+	URI []byte
+}
+
+func (p *URIDevicePath) Text() string {
+	return fmt.Sprintf("URI: %s", string(p.URI))
+}
+
+func (p *URIDevicePath) GetHead() *Head {
+	return &p.Head
+}
+
+func (p *URIDevicePath) ReadFrom(r io.Reader) (n int64, err error) {
+	fr := efireader.NewFieldReader(r, &n)
+	p.URI = make([]byte, p.Length-4)
+
+	if err = fr.ReadFields(&p.URI); err != nil {
 		return
 	}
 	return
