@@ -17,7 +17,7 @@ package efidevicepath
 import (
 	"testing"
 
-	"github.com/0x5a17ed/uefi/efi/efiguid"
+	"github.com/blindson76/uefi/efi/efiguid"
 )
 
 func TestHardDriveMediaDevicePath_Notation(t *testing.T) {

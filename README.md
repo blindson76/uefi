@@ -22,8 +22,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/0x5a17ed/uefi/efi/efivario"
-	"github.com/0x5a17ed/uefi/efi/efivars"
+	"github.com/blindson76/uefi/efi/efivario"
+	"github.com/blindson76/uefi/efi/efivars"
 )
 
 func main() {

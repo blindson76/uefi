@@ -19,9 +19,9 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/0x5a17ed/uefi/efi/efiguid"
-	"github.com/0x5a17ed/uefi/efi/efihex"
-	"github.com/0x5a17ed/uefi/efi/efireader"
+	"github.com/blindson76/uefi/efi/efiguid"
+	"github.com/blindson76/uefi/efi/efihex"
+	"github.com/blindson76/uefi/efi/efireader"
 )
 
 //go:generate go run github.com/hexaflex/stringer -type=PartitionFormat,SignatureType -output mediapath_string.go
